@@ -1,22 +1,20 @@
-# ANOMALY DETECTION
+# EMOTION RECOGNITION BASED ON SENSORS AND ML
 
-Most machine learning (ML) proposals in the Internet of Things (IoT) space are designed and evaluated on pre-processed datasets, where the data acquisition and cleaning steps are often considered a black box. Therefore, the data acquisition stage requires additional data cleaning/anomaly techniques, which translate to additional resources, energy, and storage. We propose to carry out such techniques not in the cloud servers and closer to the data source, on the IoT device itself. Consequently, this application defines three anomaly detection steps using smoothing filters, unsupervised learning, and deep learning techniques (hybrid model) to detect the different variations of anomalies, focusing on a small computational/memory footprint.
+Human-computer interaction plays a fundamental role in training machine learning models since computers can learn from human behavior. Therefore, this task can be done by cameras and sensors. However, in some scenarios, cameras need a controlled environment to take good-quality pictures and extract patterns from the muscles of the face. Consequently, sensors are a flexible solution in rough applications when humans constantly move or their emotions have weak muscle contractions. In this IoT application,  electromyography sensors are allocated to the human face to recognize the six primary emotions: happiness, anger, surprise, fear, sadness, and disgust. 
 
 ## DATASET: 
 
-To explain tamper situations, a test box was built to collect data from three different scenarios. The test box is made with a computer fan to cool the box, an incandescent bulb to warm up the box, and a small door that people can smoke or blow over the sensor. Therefore, label 1 is considered when the box is warming/cooling in normal conditions, label 2 when the sensor is tampered with by people blowing on it, label 3 is defined when people smoke near the sensor, and label 4 when the sensor detects fire. The IoT device has a well-known CO2, temperature, and humidity sensor [SCD-30](https://sensirion.com/products/catalog/SCD30/), the [LoPy4](https://pycom.io/product/lopy4/) as a microcontroller and a relay board to manage the fan and the bulb. 
+Two EMG channels sensor is located in the Corrugator Supercilii in the forehead's upper part of the eyebrow. This is the primary muscle over the negative emotions of sadness, anger, and disgust (1). Another sensor is allocated in the Zygomaticus major, the muscle located in the cheek near the mouth. This muscle has a high activity on emotions of happiness, fear, and surprise (2). Finally, the last sensor collects data from the Depressor Anuguli Oris, which is in the lower part of the mouth towards the jaw, acting mainly on the emotions of surprise, happiness, and sadness (3). 
 
 ## BACKGROUND:
 
-- **Noise:** The sensor's signal is discretized/digitalized to be understandable to the microcontroller. However, errors like voltage fluctuations, non-linearity response, and vibrations insert noise into the electric signal, confusing the ML algorithm in the feature extraction stage. For this reason, signal smoothing is a filter that reduces these noise components when the phenomenon does not have high sampling frequencies getting a cleaner signal.
+- **Facial muscles:** The facial muscles are the fibers (elastic tissue) that support sensory organs to perform their activities. For example, chewing, smelling, hearing, or listening. Motor neurons carry out this process by giving instructions to muscles by electrical pulses to maintain muscle contraction. This electrical activity is called motor unit action potential (MUAP), representing the duration, electrical amplitude, and phases of muscle contraction. Typical MUAP duration is between 5 and 15 ms. In this scenario, the facial muscles are divided into three: (1) the top group, which generates eyebrow movement, frowning mainly to allow eye-opening; (2) the middle group, closely involved with mouth movements, helps phonation, and some very particular muscles allow chewing; and (3) the bottom group is responsible for generating facial movements due to the lips' soft tissues. ![EMG](https://github.com/puldavid87/emotion_recognition/blob/main/design_best.png)
 
-- **Outlier detection:** These methods are in charge of detecting data with a different distribution than the rest. This process is carried out through an unsupervised analysis.
-
-- **Tamper detection:** In some scenarios, the information acquired by the IoT device can be compromised by malicious users trying to steal or modify data. tamper detection techniques require knowing all the manipulation possibilities to detect them, which needs supervised learning.
+Therefore, the facial actions coding system ([FACS](https://web.archive.org/web/20110520164252/http://face-and-emotion.com/dataface/facs/description.jsp) indexes the facial expressions in actions units (AU) to match with the biomechanic information obtained in MUAP analysis of EMG signals. Furthermore, this approach aims at splitting the face into individual movements of their specific muscle activation to describe emotions \cite{Lewinski2014}. Therefore, FACS has intensity scoring by appending letters A–E (for minimal-maximal intensity) to the action unit number. Consequently, the target emotions that FACS helps to determine are as follows: surprise, sadness, happiness, anger, disgust, and fear. 
 
 ## RESOURCES:
 
-- [Python Code](https://github.com/puldavid87/anomaly_detection/blob/main/anomaly_detection.ipynb)
-- [Dataset](https://github.com/puldavid87/anomaly_detection/blob/main/anomaly_detection.csv)
-- [Webpage project](https://iot4.paulrosero-montalvo.com/anomaly/)
-- [Article](https://iot4.paulrosero-montalvo.com/gallery/Hybrid_Anomaly_Detection_Model_on_IoT_Devices%20(1).pdf)
+- [Python Code](https://github.com/puldavid87/emotion_recognition/blob/main/emg_data_collection.ipynb)
+- [Dataset](https://github.com/puldavid87/emotion_recognition/blob/main/emg_data.csv)
+- [Webpage project](https://iot4.paulrosero-montalvo.com/emg/)
+- [Article](https://iot4.paulrosero-montalvo.com/gallery/article_emg_draft.pdf)
